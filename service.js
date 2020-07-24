@@ -26,7 +26,12 @@ function chercherChambre(numero, callback) {
     request('https://leo-hotel-web-api.herokuapp.com/reservations', { json: true }, function (err, res, body) {
         if (err) { return console.log('Erreur', err); }
         // body contient les données récupérées
-        callback(!Array.prototype.concat.apply([], body.map(r => r.chambres)).map(c => c.numero).some(n => n == numero));
+        callback(
+            // aplatit la liste de listes de chambres en une liste 1D de chambres
+            !Array.prototype.concat.apply([], body.map(r => r.chambres))
+                .map(c => c.numero)
+                .some(n => n == numero)
+                );
     });
 
 }

@@ -17,6 +17,7 @@ async function start() {
 `;
     rl.question(menu, saisie => {
         switch (saisie) {
+            // Lister les clients
             case "1":
                 console.log("\n>> Liste des clients\n");
                 service.listerClients(clients => {
@@ -24,6 +25,7 @@ async function start() {
                     start();
                 });
                 break;
+            // Ajouter un client
             case "2":
                 var nom, prenoms;
                 rl.question("\nVeuillez renseigner un nom\n", saisie_nom => {
@@ -37,6 +39,7 @@ async function start() {
                     );
                 });
                 break;
+            // Rechercher un client par nom
             case "3":
                 rl.question("\nVeuiller entrer un nom de client\n", saisie_client => {
                     service.chercherClient(saisie_client, clients => {
@@ -45,6 +48,7 @@ async function start() {
                     })
                 });
                 break;
+            // Vérifier la disponibilité d'une chambre
             case "4":
                 rl.question("\nVeuiller entrer le numéro de la chambre\n", saisie_chambre => {
                     service.chercherChambre(saisie_chambre, chambreDispo => {
@@ -53,6 +57,7 @@ async function start() {
                     })
                 });
                 break;
+            // Sortir
             case "99":
                 console.log("\nAu revoir\n");
                 rl.close();
