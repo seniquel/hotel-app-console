@@ -23,7 +23,8 @@ async function start() {
                 service.listerClients(clients => {
                     afficherClients(clients);
                     start();
-                });
+                },
+                    err => console.log('Erreur', err));
                 break;
             // Ajouter un client
             case "2":
@@ -37,7 +38,8 @@ async function start() {
                         start();
                     }
                     );
-                });
+                },
+                    err => console.log('Erreur', err));
                 break;
             // Rechercher un client par nom
             case "3":
@@ -46,7 +48,8 @@ async function start() {
                         afficherClients(clients);
                         start();
                     })
-                });
+                },
+                    err => console.log('Erreur', err));
                 break;
             // Vérifier la disponibilité d'une chambre
             case "4":
@@ -55,7 +58,8 @@ async function start() {
                         messageChambreDispo(saisie_chambre, chambreDispo)
                         start();
                     })
-                });
+                },
+                    err => console.log('Erreur', err));
                 break;
             // Sortir
             case "99":
