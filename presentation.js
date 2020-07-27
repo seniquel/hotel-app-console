@@ -1,13 +1,13 @@
-var readline = require('readline');
-var service = require("./service.js");
+const readline = require('readline');
+const service = require("./service.js");
 
-var rl = readline.createInterface({
+let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
 
-async function start() {
+function start() {
     menu = `
 1. Lister les clients
 2. Ajouter un client
@@ -19,21 +19,21 @@ async function start() {
         switch (saisie) {
             // Lister les clients
             case "1":
-                console.log("\n>> Liste des clients\n");
-                service.listerClients(clients => {
+                console.log(">> Liste des clients\n");
+                service.listerClients().then(clients => {
                     afficherClients(clients);
                     start();
-                },
-                    err => console.log('Erreur', err));
+                })
+                    .catch(err => console.log('Erreur', err));
                 break;
             // Ajouter un client
             case "2":
-                var nom, prenoms;
-                rl.question("\nVeuillez renseigner un nom\n", saisie_nom => {
+                let nom, prenoms;
+                rl.question("Veuillez renseigner un nom\n", saisie_nom => {
                     nom = saisie_nom;
-                    rl.question("\nVeuillez renseigner un prenom\n", saisie_prenoms => {
+                    rl.question("Veuillez renseigner un prenom\n", saisie_prenoms => {
                         prenoms = saisie_prenoms
-                        var client = { nom: nom, prenoms: prenoms };
+                        const client = { nom: nom, prenoms: prenoms };
                         service.ajouterClient(client);
                         start();
                     }
@@ -43,27 +43,27 @@ async function start() {
                 break;
             // Rechercher un client par nom
             case "3":
-                rl.question("\nVeuiller entrer un nom de client\n", saisie_client => {
-                    service.chercherClient(saisie_client, clients => {
+                rl.question("Veuiller entrer un nom de client\n", saisie_client => {
+                    service.chercherClient(saisie_client).then(clients => {
                         afficherClients(clients);
                         start();
                     })
-                },
-                    err => console.log('Erreur', err));
+                        .catch(err => console.log('Erreur', err));
+                });
                 break;
             // Vérifier la disponibilité d'une chambre
             case "4":
-                rl.question("\nVeuiller entrer le numéro de la chambre\n", saisie_chambre => {
-                    service.chercherChambre(saisie_chambre, chambreDispo => {
+                rl.question("Veuiller entrer le numéro de la chambre\n", saisie_chambre => {
+                    service.chercherChambre(saisie_chambre).then(chambreDispo => {
                         messageChambreDispo(saisie_chambre, chambreDispo)
                         start();
                     })
-                },
-                    err => console.log('Erreur', err));
+                        .catch(err => console.log('Erreur', err));
+                });
                 break;
             // Sortir
             case "99":
-                console.log("\nAu revoir\n");
+                console.log("Au revoir\n");
                 rl.close();
                 break;
             default:
@@ -79,9 +79,9 @@ function afficherClients(clients) {
 
 function messageChambreDispo(numero, disponibilité) {
     if (disponibilité) {
-        console.log("La chambre numéro", numero, "est disponible")
+        console.log(`La chambre numéro ${numero} est disponible`)
     }
     else {
-        console.log("La chambre numéro", numero, "n'est pas disponible")
+        console.log(`La chambre numéro ${numero} n'est pas disponible`)
     }
 }
