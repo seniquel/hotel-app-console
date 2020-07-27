@@ -1,11 +1,12 @@
 const readline = require('readline');
-const service = require("./service.js");
+const {Service} = require("./service.js");
 
 let rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
+const service = new Service();
 
 function start() {
     menu = `
