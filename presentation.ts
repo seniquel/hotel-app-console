@@ -1,5 +1,8 @@
-const readline = require('readline');
-const {Service} = require("./service.js");
+//const readline = require('readline');
+//const {Service} = require("./service.js");
+import readline from 'readline';
+import {Service} from './service';
+import {Client, Hotel, Chambre, Reservation} from './domain';
 
 let rl = readline.createInterface({
     input: process.stdin,
@@ -8,8 +11,8 @@ let rl = readline.createInterface({
 
 const service = new Service();
 
-function start() {
-    menu = `
+export function start() {
+    let menu = `
 1. Lister les clients
 2. Ajouter un client
 3. Rechercher un client par nom
@@ -29,18 +32,17 @@ function start() {
                 break;
             // Ajouter un client
             case "2":
-                let nom, prenoms;
+                let nom:string, prenoms:string;
                 rl.question("Veuillez renseigner un nom\n", saisie_nom => {
                     nom = saisie_nom;
                     rl.question("Veuillez renseigner un prenom\n", saisie_prenoms => {
                         prenoms = saisie_prenoms
                         const client = { nom: nom, prenoms: prenoms };
-                        service.ajouterClient(client);
+                        service.ajouterClient(client).catch(err => console.log('Erreur', err));
                         start();
                     }
                     );
-                },
-                    err => console.log('Erreur', err));
+                });
                 break;
             // Rechercher un client par nom
             case "3":
@@ -72,14 +74,14 @@ function start() {
         }
     });
 }
-exports.start = start;
+//exports.start = start;
 
-function afficherClients(clients) {
-    clients.forEach(c => console.log(c.nom, c.prenoms));
+function afficherClients(clients:Client[]) {
+    clients.forEach( (c:Client) => console.log(c.nom, c.prenoms));
 }
 
-function messageChambreDispo(numero, disponibilité) {
-    if (disponibilité) {
+function messageChambreDispo(numero:string, disponibilite:boolean) {
+    if (disponibilite) {
         console.log(`La chambre numéro ${numero} est disponible`)
     }
     else {
