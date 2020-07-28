@@ -1,7 +1,7 @@
 //const request = require('request');
 //const request = require('request-promise-native');
 import request from 'request-promise-native';
-import {Client, Hotel, Chambre, Reservation} from './domain';
+import {Client, Chambre, Reservation} from './domain';
 export class Service {
     listerClients() {
         return request('https://leo-hotel-web-api.herokuapp.com/clients?start=0&size=10', { json: true })

@@ -2,7 +2,7 @@
 //const {Service} = require("./service.js");
 import readline from 'readline';
 import {Service} from './service';
-import {Client, Hotel, Chambre, Reservation} from './domain';
+import {Client} from './domain';
 
 let rl = readline.createInterface({
     input: process.stdin,
