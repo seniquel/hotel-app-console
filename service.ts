@@ -8,7 +8,7 @@ export class Service {
             .then(body => body);
     }
 
-    ajouterClient(client:any) {
+    ajouterClient(client:Client) {
         return request.post('https://leo-hotel-web-api.herokuapp.com/clients', { json: client });
     }
 
